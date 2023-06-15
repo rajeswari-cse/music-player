@@ -1,0 +1,251 @@
+<html>
+<head>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:verdana;
+}
+
+
+body{
+   width:100%;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:WhiteSmoke;
+}
+
+
+.container{
+     width:25%;
+    height:86vh;
+     background:YellowGreen;
+     border-radius:20px;
+    box-shadow:15px 15px 60px 5px LightCoral ;
+}
+h4{
+   text-align:center;
+margin-top:25px;
+font-size:20px;
+color:white;
+}
+
+
+img{
+  width:70%;
+height:40%;
+margin:10% 10% 5% 10%;
+border-radius:20px;
+box-shadow:10px 15px 25px 5px  ;
+
+
+}
+
+
+
+p{
+  margin:3%;
+text-align:center;
+font-size:18px;
+letter-spacing:2px;
+color:white;
+}
+
+marquee{
+  width:80%;
+  margin-left:10%;
+
+
+}
+
+input{
+  width:80%;
+  margin:2% 10%;  //top and bottom
+
+}
+
+
+button{
+
+padding:20px;
+text-align:center;
+margin-top:2%;
+margin-left:13%;
+margin-bottom:4%;
+border-radius:50px;
+background:transparent;
+border:none;
+box-shadow:5px 5px 10px rgba(0,0,0,0.5),-1px,-1px 1px white;
+}
+
+button:hover{
+box-shadow:inset 5px 5px 10px rgba(0,0,0,0.5),1px 1px 1px white;
+
+}
+
+
+</style>
+<script src="https://kit.fontawesome.com/053e401a79.js" crossorigin="anonymous"></script>
+</head>
+<body>
+   <div class="container">
+	<h4>Music Player</h4>
+
+        <img id="track_image">
+         <p id="title">title.mp3</p>
+         <marquee id="artist">Artist name</marquee>
+<input type="range" id="duration_slider" min="0" max="100" value="0" onclick="change_duration()">
+<button onclick="pre()" id="pre"><i class="fa-solid fa-backward"></i></button>
+<button onclick="justplay()" id="play"><i class="fa-solid fa-play"></i></button>
+<button onclick="next_song()" id="next"><i class="fa-solid fa-forward"></i></button>
+</div>
+
+<script>
+ let previous=document.querySelector('#pre');
+ let play=document.querySelector('#play');
+ let forw=document.querySelector('#next');
+ let title=document.querySelector('#title');
+ let artist=document.querySelector('#artist');
+
+ let slider=document.querySelector('#duration_slider');
+ let track_image=document.querySelector('#track_image');
+
+
+let timer;
+let autoplay=1;
+let index_no=0;
+let playing_song=false;
+let track=document.createElement('audio');
+
+
+let All_song=[
+{
+   name:"first song",
+   path:"music/rr.mp3",
+img:"image/r.jpg",
+artist:' "super star"' 
+
+
+},
+
+{
+   name:"second song",
+   path:"music/kk.mp3",
+  img:"image/k.jpg",
+  artist:' "ulaga nayagan"' 
+
+
+},
+{
+   name:"third song",
+   path:"music/vv.mp3",
+img:"image/v.jpg",
+artist:' "thalapathy"' ,
+
+
+}
+ 
+];
+function load_track(index_no)
+{
+clearInterval(timer);
+reset_slider();
+track.src=All_song[index_no].path;
+title.innerHTML=All_song[index_no].name;
+track_image.src=All_song[index_no].img;
+artist.innerHTML=All_song[index_no].artist;
+
+}
+
+load_track(index_no);
+
+
+function justplay()
+{
+if(playing_song==false)
+{
+playsong();
+}
+else
+{
+pausesong();
+}
+
+}
+
+function reset_slider()
+{
+
+slider.value=0;
+}
+
+
+function playsong()
+{ 
+track.play();
+playing_song=true;
+play.innerHTML='<i class="fa-solid fa-pause"></i>';
+
+
+}
+
+
+
+function pausesong(){
+track.pause();
+playing_song=false;
+play.innerHTML='<i class="fa-solid fa-play"></i>';
+
+
+}
+
+function next_song()
+{
+if(index_no < All_song.length-1)
+{
+index_no+=1;
+load_track(index_no);
+playsong();
+}
+else
+{
+index_no=0;
+load_track(index_no);
+playsong();
+}
+
+}
+
+function pre()
+{
+if(index_no >0)
+{
+index_no-=1;
+load_track(index_no);
+playsong();
+}
+else
+{
+index_no=All_song.length;
+load_track(index_no);
+playsong();
+}
+
+}
+
+
+
+function change_duration(){
+ slider_position=track.duration*(slider.value/100);
+track.currentTime=slider_position;
+}
+
+
+</script>
+
+</body>
+</html>
