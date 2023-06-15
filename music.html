@@ -87,7 +87,12 @@ box-shadow:inset 5px 5px 10px rgba(0,0,0,0.5),1px 1px 1px white;
 
 }
 
-
+@media screen and(max-width:576px)
+	{
+		.container{
+			width:70%;
+		}
+	}
 </style>
 <script src="https://kit.fontawesome.com/053e401a79.js" crossorigin="anonymous"></script>
 </head>
@@ -243,6 +248,7 @@ function change_duration(){
  slider_position=track.duration*(slider.value/100);
 track.currentTime=slider_position;
 }
+
 
 
 </script>
